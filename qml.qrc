@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>GWindow.qml</file>
+        <file>Data/imge/BG_sea.png</file>
+        <file>Data/imge/shore.png</file>
+    </qresource>
+</RCC>
