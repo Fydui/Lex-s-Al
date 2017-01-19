@@ -33,7 +33,6 @@ ApplicationWindow {
     Image {
         id: bg_sea_sec
         x: -960
-        y: 30
         source: "///Data/imge/BG_sea.png"
         clip: true
         SequentialAnimation on x {
@@ -51,6 +50,42 @@ ApplicationWindow {
     Image {
         id: shore
         source: "///Data/imge/shore.png"
+    }
+/*
+    Image {
+        id: random_refresh
+        source: path
+        x: 0
+        y: Dy
+    }*/
+    Image {
+        id: figure;
+        x: 850;
+        y: 120;
+        source: "///Data/imge/Lexinton_l.png";
+    }
+    Item {
+        id: key
+        focus: true
+       //Keys.enabled: true
+        Keys.onPressed: {
+            if(event.key === Qt.Key_Up){
+                if(figure.y > 40)
+                    figure.y -= 10;
+            }
+            else if(event.key === Qt.Key_Down){
+                if(figure.y < 390)
+                    figure.y += 10;
+            }
+            else if(event.key === Qt.Key_Left){
+                if(figure.x > 0)
+                    figure.x -= 10
+            }
+            else if(event.key === Qt.Key_Right){
+                if(figure.x < 850)
+                    figure.x += 10
+            }
+        }
     }
 
 }
