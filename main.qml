@@ -1,4 +1,4 @@
-import QtQuick 2.7
+﻿import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import my.Gevent 1.0
@@ -54,12 +54,48 @@ ApplicationWindow {
         source: "///Data/imge/shore.png"
     }
 
+    property int sum: 3
+    Item {
+        Image {
+            id: sg1
+            x:340
+            y:10
+            source: "///Data/imge/SG.png"
+        }
+        Image {
+            id: sg2
+            x:410
+            y:10
+            source: "///Data/imge/SG.png"
+        }
+        Image {
+            id: sg3
+            x:480
+            y:10
+            source: "///Data/imge/SG.png"
+        }
+    }
+
+    //property int fx: 850;//玩家的x坐标
+    //property int fy: 40//120;//玩家的y坐标
+
     //我觉得下面这几个Image应该写成函数 卧槽 我为啥要用QML
+    function myCheck(){
+        var pd = myEvent.ifcollision(row_1.x,row_1.y,figure.x,figure.y)
+        if(pd === true){
+            //figure.x -= 200;
+            sum--;
+            if(sum !== 0){
+                if(sum === 2) sg1.y = -60
+                else if(sum === 1) sg2.y = -60
+            }
+        }
+    }
+
     Image {
         id: row_1
         source: "///Data/imge/SH_CA.png"
-        x: 0
-        y: 40
+        y: 200
         clip: true
         SequentialAnimation on x {
             PropertyAnimation {
@@ -69,8 +105,10 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
-    }
+        onXChanged: {
+            myCheck();
+        }
+    }/*
     Image {
         id: row_2
         source: "///Data/imge/SH_CLT.png"
@@ -84,7 +122,6 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
     }
 
     Image {
@@ -182,12 +219,12 @@ ApplicationWindow {
             }
         }
 
-    }
+    }*/
 
     Image {
         id: figure;
         x: 850;
-        y: 120;
+        y: 40;
         source: "///Data/imge/Lexinton_l.png";
     }
     Item {
