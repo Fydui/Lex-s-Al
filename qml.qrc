@@ -1,9 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>GWindow.qml</file>
         <file>Data/imge/BG_sea.png</file>
         <file>Data/imge/shore.png</file>
         <file>Data/imge/Lexinton_l.png</file>
+        <file>Data/imge/SH_DD.png</file>
+        <file>Data/imge/SH_CLT.png</file>
+        <file>Data/imge/SH_CA.png</file>
+        <file>Data/imge/SH_CV.png</file>
     </qresource>
 </RCC>
