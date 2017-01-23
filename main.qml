@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import my.Gevent 1.0
+
 ApplicationWindow {
     visible: true
     width: 960
@@ -11,11 +12,13 @@ ApplicationWindow {
     maximumWidth: 960;
     minimumHeight: 540;
     minimumWidth: 960;
+
     Image {
         id: bg_sea_static//静态背景
         source: "///Data/imge/BG_sea.png"
     }
-/*          //滚动背景 我觉得看上去晕 所以去掉了
+
+    /*          //滚动背景 我觉得看上去晕 所以去掉了
     Image {
         id: bg_sea
         x: 0
@@ -54,48 +57,62 @@ ApplicationWindow {
         source: "///Data/imge/shore.png"
     }
 
-    property int sum: 3
-    Item {
-        Image {
-            id: sg1
-            x:340
-            y:10
-            source: "///Data/imge/SG.png"
-        }
-        Image {
-            id: sg2
-            x:410
-            y:10
-            source: "///Data/imge/SG.png"
-        }
-        Image {
-            id: sg3
-            x:480
-            y:10
-            source: "///Data/imge/SG.png"
-        }
-    }
-
-    //property int fx: 850;//玩家的x坐标
-    //property int fy: 40//120;//玩家的y坐标
-
-    //我觉得下面这几个Image应该写成函数 卧槽 我为啥要用QML
-    function myCheck(){
-        var pd = myEvent.ifcollision(row_1.x,row_1.y,figure.x,figure.y)
+    property bool pd: false
+    function myCheck(x1){
+        pd = myEvent.ifcollision(x1.x,x1.y,figure.x,figure.y)
         if(pd === true){
-            //figure.x -= 200;
-            sum--;
-            if(sum !== 0){
-                if(sum === 2) sg1.y = -60
-                else if(sum === 1) sg2.y = -60
-            }
+            mytime.interval = false;
+            read.source = "///Data/imge/read.png"
+            speak.text = "GAME OVER!\n       您坚持了:"+ timetext.text + "s"
+            figure.source = ""
         }
     }
 
+
+    property int c: 0
+    function timed(){
+        timetext.text = c;
+        c += 1;
+    }
+    Timer {
+        id: mytime
+        interval: 1000;
+        running: true;
+        repeat: true;
+        onTriggered: timed();
+    }
+    Text {
+        id: timetext
+        font.pointSize: 25
+        color: "red"
+        text: ""
+    }
+
+    Item{
+        width: 960
+        height:540
+        Image {
+            id:read
+            anchors.centerIn: parent;
+            source: ""
+        }
+        Text {
+            id: speak
+            font.pointSize: 24
+            anchors.centerIn: parent
+            text: ""
+        }
+    }
+
+    Text {
+
+        id:gameover
+        font.pointSize: 24
+    }
     Image {
         id: row_1
         source: "///Data/imge/SH_CA.png"
-        y: 200
+        y: 40
         clip: true
         SequentialAnimation on x {
             PropertyAnimation {
@@ -105,15 +122,13 @@ ApplicationWindow {
                 to: 1500
             }
         }
-        onXChanged: {
-            myCheck();
-        }
-    }/*
+        onXChanged: myCheck(row_1);
+    }
     Image {
         id: row_2
         source: "///Data/imge/SH_CLT.png"
-        x: 0
         y: 160
+        clip: true
         SequentialAnimation on x {
             PropertyAnimation {
                 loops: Animation.Infinite
@@ -122,13 +137,14 @@ ApplicationWindow {
                 to: 1500
             }
         }
+        onXChanged: myCheck(row_2);
     }
 
     Image {
         id: row_3
         source: "///Data/imge/SH_DD.png"
-        x: 0
         y: 280
+        clip: true
         SequentialAnimation on x {
             PropertyAnimation {
                 loops: Animation.Infinite
@@ -137,14 +153,14 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
+        onXChanged: myCheck(row_3);
     }
 
     Image {
         id: row_4
         source: "///Data/imge/SH_CV.png"
-        x: 0
         y: 400
+        clip: true
         SequentialAnimation on x {
             PropertyAnimation {
                 loops: Animation.Infinite
@@ -153,13 +169,12 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
+        onXChanged: myCheck(row_4);
     }
 
     Image {
         id: row_1p
         source: "///Data/imge/SH_CV.png"
-        x: 0
         y: 40
         clip: true
         SequentialAnimation on x {
@@ -170,12 +185,11 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
+        onXChanged: myCheck(row_1p);
     }
     Image {
         id: row_2p
         source: "///Data/imge/SH_CA.png"
-        x: 0
         y: 160
         SequentialAnimation on x {
             PropertyAnimation {
@@ -185,13 +199,12 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
+        onXChanged: myCheck(row_2p);
     }
 
     Image {
         id: row_3p
         source: "///Data/imge/SH_CLT.png"
-        x: 0
         y: 280
         SequentialAnimation on x {
             PropertyAnimation {
@@ -201,14 +214,13 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
+        onXChanged: myCheck(row_3p);
     }
 
 
     Image {
         id: row_4p
         source: "///Data/imge/SH_DD.png"
-        x: 0
         y: 400
         SequentialAnimation on x {
             PropertyAnimation {
@@ -218,8 +230,8 @@ ApplicationWindow {
                 to: 1500
             }
         }
-
-    }*/
+        onXChanged: myCheck(row_4p);
+    }
 
     Image {
         id: figure;
@@ -227,10 +239,11 @@ ApplicationWindow {
         y: 40;
         source: "///Data/imge/Lexinton_l.png";
     }
+
     Item {
         id: key
         focus: true
-       //Keys.enabled: true
+        //Keys.enabled: true
         Keys.onPressed: {
             if(event.key === Qt.Key_Up){
                 if(figure.y > 40)
