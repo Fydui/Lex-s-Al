@@ -239,6 +239,41 @@ ApplicationWindow {
         y: 40;
         source: "///Data/imge/Lexinton_l.png";
     }
+/*
+    Timer {
+        id:xyRefresh
+        interval: 1000;
+        running: true;
+        repeat: true;
+        onTriggered: {
+            al.x = myEvent.xRefresh();
+            al.y = myEvent.yRefresh();
+        }
+    }*/
+    property int alsum: 0
+    Image{
+        id: alRe;
+        source: "";
+    }
+
+    Item {
+        Image{
+            id: alimg;
+            x:800;
+            y:0;
+            source: "///Data/imge/AL.png";
+        }
+        Text{
+            id: alsumtext
+            x: 850
+            y: 0
+            font.pointSize: 20
+            color: "black"
+            text: "铝X " + alsum;
+        }
+    }
+
+
 
     Item {
         id: key
