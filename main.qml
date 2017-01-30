@@ -1,4 +1,6 @@
-﻿import QtQuick 2.7
+﻿
+import QtQuick 2.7
+import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import my.Gevent 1.0
@@ -59,19 +61,19 @@ ApplicationWindow {
 
     property bool pd: false
     function myCheck(x1){
-        pd = myEvent.ifcollision(x1.x,x1.y,figure.x,figure.y)
+        pd = myEvent.ifcollision(x1.x,x1.y,figure.x,figure.y,80,95)
         if(pd === true){
             mytime.interval = false;
             read.source = "///Data/imge/read.png"
             speak.text = "GAME OVER!\n       您坚持了:"+ timetext.text + "s"
-            figure.source = ""
+            figure.source = "";
         }
     }
 
 
     property int c: 0
     function timed(){
-        timetext.text = c;
+        timetext.text = "您坚持了:"+c+"秒";
         c += 1;
     }
     Timer {
@@ -252,7 +254,7 @@ ApplicationWindow {
     }*/
     property int alsum: 0
     Image{
-        id: alRe;
+        id: al;
         source: "";
     }
 
@@ -272,8 +274,27 @@ ApplicationWindow {
             text: "铝X " + alsum;
         }
     }
+/*
+    Timer {
+        id: alRe
+        interval: 2000;
+        running: true;
+        repeat: true;
+       // onTriggered: // 检测函数 inspection()
+    }*/
 
 
+
+    function inspection(){
+        if(alRe.source !== "///Data/imge/AL.png"){
+            al.x = myEvent.xRefresh();
+            al.y = myEvent.yRefresh();
+            al.source = "///Data/imge/AL.png";
+        }
+    }
+    function inspectionAL(){
+        if(true === myEvent.ifcollision());
+    }
 
     Item {
         id: key
@@ -296,6 +317,7 @@ ApplicationWindow {
                 if(figure.x < 850)
                     figure.x += 20
             }
+
         }
     }
 
