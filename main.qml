@@ -65,8 +65,9 @@ ApplicationWindow {
         if(pd === true){
             mytime.interval = false;
             read.source = "///Data/imge/read.png"
-            speak.text = "GAME OVER!\n       您坚持了:"+ timetext.text + "s"
+            speak.text = "GAME OVER!\n       您坚持了:"+ timetext.text + "\n您收集了" + alsum +"块铝";
             figure.source = "";
+            mytime.stop();
         }
     }
 
@@ -93,11 +94,28 @@ ApplicationWindow {
     Item{
         width: 960
         height:540
+
         Image {
             id:read
             anchors.centerIn: parent;
             source: ""
+            MouseArea {
+                width: parent.width
+                height: parent.height
+                onClicked: {
+                    figure.source = "///Data/imge/Lexinton_l.png"
+                    c = 0;
+                    alsum = 0;
+                    read.source = ""
+                    speak.text = ""
+                    mytime.start()
+                    mytime.restart()
+                    mytime.running = true;
+                    mytime.repeat = true;
+                }
+            }
         }
+
         Text {
             id: speak
             font.pointSize: 24
@@ -105,7 +123,6 @@ ApplicationWindow {
             text: ""
         }
     }
-
     Text {
 
         id:gameover
@@ -274,26 +291,34 @@ ApplicationWindow {
             text: "铝X " + alsum;
         }
     }
-/*
+
     Timer {
         id: alRe
-        interval: 2000;
+        interval: 5000;
         running: true;
         repeat: true;
-       // onTriggered: // 检测函数 inspection()
-    }*/
+        onTriggered: inspection(); // 检测函数 inspection()
+    }
 
 
-
+    property int x: 0;
+    property int y: 0;
     function inspection(){
-        if(alRe.source !== "///Data/imge/AL.png"){
-            al.x = myEvent.xRefresh();
-            al.y = myEvent.yRefresh();
+        x = myEvent.xRefresh();
+        y = myEvent.yRefresh();
+        if(al.source != "///Data/imge/AL.png"){
             al.source = "///Data/imge/AL.png";
+            al.x = x;
+            al.y = y;
         }
     }
     function inspectionAL(){
-        if(true === myEvent.ifcollision());
+        if(true === myEvent.ifcollision(al.x,al.y,figure.x,figure.y,80,95)){
+            al.x = 0;
+            al.y = 0;
+            al.source = "///Data/"
+            alsum++;
+        }
     }
 
     Item {
@@ -317,9 +342,10 @@ ApplicationWindow {
                 if(figure.x < 850)
                     figure.x += 20
             }
-
+             inspectionAL();
         }
     }
+
 
 }
 
