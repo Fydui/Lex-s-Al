@@ -4,6 +4,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import my.Gevent 1.0
+import QtMultimedia 5.5
 
 ApplicationWindow {
     visible: true
@@ -14,6 +15,11 @@ ApplicationWindow {
     maximumWidth: 960;
     minimumHeight: 540;
     minimumWidth: 960;
+
+    Audio {
+        id:bgm
+        source: "///Data/2nd_anniversary_c.mp3"
+    }
 
     Image {
         id: bg_sea_static//静态背景
@@ -141,7 +147,10 @@ ApplicationWindow {
                 to: 1500
             }
         }
-        onXChanged: myCheck(row_1);
+        onXChanged: {
+            myCheck(row_1);
+            bgm.play()
+        }
     }
     Image {
         id: row_2
