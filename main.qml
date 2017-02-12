@@ -186,7 +186,7 @@ ApplicationWindow {
 
     Image {
         id: row_4
-        source: "///Data/imge/SH_CV.png"
+        source: "///Data/imge/SH_BC.png"
         y: 400
         clip: true
         SequentialAnimation on x {
@@ -248,7 +248,7 @@ ApplicationWindow {
 
     Image {
         id: row_4p
-        source: "///Data/imge/SH_DD.png"
+        source: "///Data/imge/SH_BB.png"
         y: 400
         SequentialAnimation on x {
             PropertyAnimation {
